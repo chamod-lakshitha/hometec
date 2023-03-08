@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="mystylesheet.css">
 <?php
 include("headfile.html");
+include("detectlogin.php");
 include("db.php");
 $pagename = "A smart buy for a smart home";
 echo "<h4>" . $pagename . "<h4>";

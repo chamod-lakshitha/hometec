@@ -28,7 +28,7 @@ if (empty($fName) | empty($lName) | empty($address) | empty($code) | empty($teln
             echo ("<p style = 'margin-left : 35px'><b>Your sign-up failed</b><br><br>Email is already registered " . "<br><br>Go back to&nbsp;<a href = 'signup.php'>Sign-Up</a></p>");
         }
     } else {
-        echo ("<p style = 'margin-left : 35px'>Sign-Up completed " . "<br><br>Go to&nbsp;<a href = 'signup.php'>Login</a></p>");
+        echo ("<p style = 'margin-left : 35px'>Sign-Up completed " . "<br><br>Go to&nbsp;<a href = 'login.php'>Login</a></p>");
     }
 }
 include("footfile.html"); //include head layout
