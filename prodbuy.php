@@ -4,24 +4,27 @@ include("headfile.html");
 include("db.php");
 $pagename = "A smart buy for a smart home";
 echo "<h4>" . $pagename . "<h4>";
-$prodId = $_GET["u_prod_id"];
-echo "<h3 style='margin-left:10px'>" . "Selected product id: " . $prodId . "</h3>";
-$SQL = "SELECT * FROM Product WHERE prodId = " . $prodId;
-$exeSQL = mysqli_query($conn, $SQL) or die("error occured" . mysqli_error($conn));
-$assocResultArray = mysqli_fetch_assoc($exeSQL);
-echo "<table style='border: 0px'>";
-echo "<tr>";
-echo "<td style='border: 0px'><img height = 400 width = 400 src = 'images/" . $assocResultArray["prodPicNameLarge"] . "' alt = 'image'></td>";
-echo "<td style = 'border : 0px'><p style = 'color : blue'>" . $assocResultArray["prodName"] .
-    "</p><br><p>" . $assocResultArray["prodDescripLong"] . "</p><br><p>$" . $assocResultArray["prodPrice"] .
-    "</p><br><p>Left in stock -> " . $assocResultArray["prodQuantity"] . "</p></td>";
-echo "</tr>";
-echo "</table>";
-echo "<div>Number to be purchased: ";
-echo "<form action=basket.php method=post>";
-echo "<input type=text name=p_quantity size=5 maxlength=3>";
-echo "<input type=submit name='submitbtn' value='ADD TO BASKET' id='submitbtn'>";
-echo "<input type=hidden name=h_prodid value=" . $prodId . ">";
-echo "</form>";
-echo "</div>";
+$prod_id = $_GET["u_prod_id"];
+echo "<h3 style='margin-left:10px'>" . "Selected product id: " . $prod_id . "</h3>";
+mysqli_select_db($conn, "home_tec");
+$SQL = "select * from product where prodId = " . $prod_id;
+$exeSQL = mysqli_query($conn, $SQL) or die("<p>error " . mysqli_error($conn) . "</p>");
+echo ("<table style = 'border : 1px'>");
+while ($arrayp = mysqli_fetch_assoc($exeSQL)) {
+    echo ("<tr>");
+    echo ("<td style = 'border : 0px'>><img src = 'images/" . $arrayp["prodPicNameSmall"] . "' alt = 'image' width = 400 height = 400/></td>");
+    echo ("<td style = 'border : 0px'><h2>" . $arrayp["prodName"] . "</h2><p>" . $arrayp["prodDescripLong"] . "</p><br><p>$" . $arrayp["prodPrice"] . "</p><br><p>Left in Stock : " . $arrayp["prodQuantity"] . "</p>");
+    echo ("<br><p>number of products to be purchased</p>");
+    echo ("<form action = 'basket.php' method = 'post'>");
+    echo ("<input type = 'hidden' name = 'id' value = '" . $prod_id . "'>");
+    echo ("<select name = ' p_quantity'>");
+    for ($i = 1; $i <= $arrayp["prodQuantity"]; $i++) {
+        echo ("<option value = '" . $i . "'>"  . $i . "</option>");
+    }
+    echo ("</select>");
+    echo ("&nbsp;&nbsp;");
+    echo ("<input type = 'submit' name = 'submit' value = 'Submit'/>");
+    echo ("</tr>");
+}
+echo ("</table>");
 include("footfile.html");
